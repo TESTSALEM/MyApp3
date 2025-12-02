@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 1. تنظيف القرص (ضروري)
+      # 1. تنظيف القرص
       - name: Free Disk Space
         uses: jlumbroso/free-disk-space@v1.3.1
         with:
@@ -26,14 +26,14 @@ jobs:
           swap-storage: true
 
       # 2. تشغيل Buildozer داخل حاوية Docker مباشرةً
-      # نستخدم صورة docker/buildozer/android-sdk التي يتم تحديثها من Kivy
+      # تم تغيير علامة الصورة من stable إلى latest-android
       - name: Run Buildozer via Docker
         run: |
-          docker pull kivy/buildozer:stable
+          docker pull kivy/buildozer:latest-android
           docker run --rm \
             -v ${{ github.workspace }}:/home/user/host \
             -w /home/user/host \
-            kivy/buildozer:stable \
+            kivy/buildozer:latest-android \
             buildozer android debug
 
       # 3. رفع ملف APK الناتج
