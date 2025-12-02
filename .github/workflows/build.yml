@@ -1,4 +1,4 @@
-name: Build APK
+name: Build Kivy App to APK
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # تصحيح اسم الأداة هنا
+      # تنظيف المساحة
       - name: Free Disk Space
         uses: jlumbroso/free-disk-space@v1.3.1
         with:
@@ -25,14 +25,14 @@ jobs:
           docker-images: true
           swap-storage: true
 
-      - name: Build with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1
-        id: buildozer
+      # --- الأداة البديلة (misl6/Android-Kivy-Buildozer) ---
+      - name: Build Android APK
+        uses: misl6/Android-Kivy-Buildozer@v1.2.0
         with:
           command: buildozer android debug
-          buildozer_version: master
 
-      - name: Upload APK
+      # رفع ملف APK الناتج
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ClickerGame-APK
