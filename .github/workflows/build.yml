@@ -1,4 +1,4 @@
-name: Build Kivy App to APK
+name: Kivy Buildozer APK Build
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # تنظيف المساحة
+      # تنظيف القرص (هذا لم يعد خطأ، يجب أن يعمل بشكل صحيح الآن)
       - name: Free Disk Space
         uses: jlumbroso/free-disk-space@v1.3.1
         with:
@@ -25,10 +25,11 @@ jobs:
           docker-images: true
           swap-storage: true
 
-      # --- الأداة البديلة (misl6/Android-Kivy-Buildozer) ---
+      # --- الأداة المعتمدة والأكثر استقراراً (kivy/buildozer-action) ---
       - name: Build Android APK
-        uses: misl6/Android-Kivy-Buildozer@v1.2.0
+        uses: kivy/buildozer-action@v1
         with:
+          # هذا الأمر يقوم بالبناء باستخدام buildozer.spec الذي أعددناه سابقاً
           command: buildozer android debug
 
       # رفع ملف APK الناتج
