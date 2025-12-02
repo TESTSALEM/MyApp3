@@ -3,27 +3,23 @@
 # (str) Title of your application
 title = Clicker Game
 
-# (str) Package name
+# (str) Package name (يجب أن يكون فريداً)
 package.name = clickergame
 
-# (str) Package domain (needed for android/ios packaging)
+# (str) Package domain (مطلوب لـ Android/iOS)
 package.domain = org.test
 
 # (str) Source code where the main.py live
 source.dir = .
 
-# (list) Source files to include (let empty to include all the files)
+# (list) Source files to include 
 source.include_exts = py,png,jpg,kv,atlas,json
 
-# (list) Application requirements
-# قمنا بإضافة مكتبات json و os لأنك تستخدمها في الكود، و kivy
+# (list) Application requirements (تم تحديد إصدار Kivy)
 requirements = python3,kivy==2.3.1,android
 
-# (str) Presplash of the application
-# presplash.filename = %(source.dir)s/data/presplash.png
-
-# (str) Icon of the application
-# icon.filename = %(source.dir)s/data/icon.png
+# (str) Application version
+version = 1.0
 
 # (list) Supported orientations
 orientation = portrait
@@ -34,7 +30,7 @@ fullscreen = 1
 # (list) Permissions
 android.permissions = INTERNET, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
 
-# (int) Target Android API, should be as high as possible (usually latest official)
+# (int) Target Android API (موصى به لـ Kivy)
 android.api = 34
 
 # (int) Minimum API your APK will support.
@@ -43,27 +39,20 @@ android.minapi = 21
 # (str) Android NDK version to use
 android.ndk = 25b
 
-# (bool) If True, then skip trying to update the Android sdk
-# This can be useful to avoid excess Internet downloads or save time
-# when an update is due and you just want to test/build your package
-android.skip_update = False
-
-# (bool) If True, then automatically accept SDK license
-# agreements. This is intended for automation only. If set to False,
-# the default, you will be shown the license when first running
-# buildozer.
+# (bool) If True, then automatically accept SDK license 
+# (مهم جداً للتشغيل التلقائي)
 android.accept_sdk_license = True
 
-# (str) The Android arch to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
+# (str) The Android arch to build for
 android.archs = arm64-v8a
 
-# --- هام جداً: تثبيت نسخة أدوات البناء لتجنب خطأ 36.1.0 ---
+# 🛑 الحل لخطأ التراخيص 36.1.0: تثبيت نسخة مستقرة 🛑
 android.build_tools_version = 34.0.0
 
 [buildozer]
 
-# (int) Log level (0 = error only, 1 = info, 2 = debug (with command output))
+# (int) Log level (2 = debug with command output)
 log_level = 2
 
-# (int) Display warning if buildozer is run as root (0 = False, 1 = True)
+# (int) Display warning if buildozer is run as root (1 = True)
 warn_on_root = 1
