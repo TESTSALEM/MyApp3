@@ -26,14 +26,17 @@ jobs:
           swap-storage: true
 
       # 2. تشغيل Buildozer داخل حاوية Docker مباشرةً
-      # تم تغيير علامة الصورة من stable إلى latest-android
+      # تم تغيير علامة الصورة إلى master (الأكثر استقرارًا الآن)
       - name: Run Buildozer via Docker
         run: |
-          docker pull kivy/buildozer:latest-android
+          # سحب صورة Buildozer باستخدام علامة master
+          docker pull kivy/buildozer:master
+          
+          # تشغيل أمر البناء
           docker run --rm \
             -v ${{ github.workspace }}:/home/user/host \
             -w /home/user/host \
-            kivy/buildozer:latest-android \
+            kivy/buildozer:master \
             buildozer android debug
 
       # 3. رفع ملف APK الناتج
@@ -42,4 +45,3 @@ jobs:
         with:
           name: ClickerGame-APK
           path: bin/*.apk
-          
