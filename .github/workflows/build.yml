@@ -26,17 +26,17 @@ jobs:
           swap-storage: true
 
       # 2. تشغيل Buildozer داخل حاوية Docker مباشرةً
-      # تم تغيير علامة الصورة إلى master (الأكثر استقرارًا الآن)
+      # نستخدم صورة kivy/buildozer بدون علامة (لأنه الأكثر ثباتًا الآن)
       - name: Run Buildozer via Docker
         run: |
-          # سحب صورة Buildozer باستخدام علامة master
-          docker pull kivy/buildozer:master
+          # سحب صورة Buildozer (بدون علامة - سيسحب آخر إصدار متوفر)
+          docker pull kivy/buildozer
           
           # تشغيل أمر البناء
           docker run --rm \
             -v ${{ github.workspace }}:/home/user/host \
             -w /home/user/host \
-            kivy/buildozer:master \
+            kivy/buildozer \
             buildozer android debug
 
       # 3. رفع ملف APK الناتج
