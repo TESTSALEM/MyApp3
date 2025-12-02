@@ -1,0 +1,42 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # تنظيف المساحة لأن بناء التطبيقات يستهلك مساحة كبيرة
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space-main@v1
+        with:
+          tool-cache: true
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
+      # عملية البناء باستخدام Buildozer
+      - name: Build with Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
+        id: buildozer
+        with:
+          command: buildozer android debug
+          buildozer_version: master
+
+      # رفع ملف APK الناتج لتقوم بتحميله
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ClickerGame-APK
+          path: bin/*.apk
+          
