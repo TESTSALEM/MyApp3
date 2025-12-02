@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 1. تنظيف القرص لتوفير مساحة
+      # 1. تنظيف القرص لتوفير مساحة للبناء
       - name: Free Disk Space
         uses: jlumbroso/free-disk-space@v1.3.1
         with:
@@ -28,17 +28,19 @@ jobs:
       # 2. تشغيل Buildozer عبر Docker
       - name: Run Buildozer via Docker
         run: |
-          # سحب صورة Buildozer باستخدام العلامة 'latest' (التي نجحت في السحب)
+          # سحب صورة Buildozer
           docker pull kivy/buildozer:latest
           
-          # 🛑 الحل: تشغيل أمر البناء باستخدام /bin/sh لحل مشكلة 'Unknown command/target buildozer' 🛑
+          # 🛑 الحل الجذري: استخدام --entrypoint لكسر قيود الصورة 🛑
+          # نقوم بتشغيل /bin/sh بالقوة لتنفيذ أمر البناء
           docker run --rm \
+            --entrypoint /bin/sh \
             -v ${{ github.workspace }}:/home/user/host \
             -w /home/user/host \
             kivy/buildozer:latest \
-            /bin/sh -c "buildozer android debug"
+            -c "buildozer android debug"
 
-      # 3. رفع ملف APK الناتج
+      # 3. رفع ملف APK الناتج ليتمكن المستخدم من تحميله
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
