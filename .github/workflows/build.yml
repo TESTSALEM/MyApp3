@@ -28,16 +28,15 @@ jobs:
       # 2. تشغيل Buildozer عبر Docker
       - name: Run Buildozer via Docker
         run: |
-          # سحب صورة Buildozer (باستخدام العلامة 'latest' لحل مشاكل 'manifest unknown')
+          # سحب صورة Buildozer باستخدام العلامة 'latest' (التي نجحت في السحب)
           docker pull kivy/buildozer:latest
           
-          # 🛑 تشغيل أمر البناء باستخدام /bin/bash لضمان تنفيذ 'buildozer' بشكل صحيح 🛑
-          # هذا يحل مشكلة 'Unknown command/target buildozer'
+          # تشغيل أمر البناء مباشرةً
           docker run --rm \
             -v ${{ github.workspace }}:/home/user/host \
             -w /home/user/host \
             kivy/buildozer:latest \
-            /bin/bash -c "buildozer android debug"
+            buildozer android debug
 
       # 3. رفع ملف APK الناتج
       - name: Upload APK Artifact
@@ -45,4 +44,3 @@ jobs:
         with:
           name: ClickerGame-APK
           path: bin/*.apk
-          
