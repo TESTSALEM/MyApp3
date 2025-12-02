@@ -3,10 +3,10 @@
 # (str) Title of your application
 title = Clicker Game
 
-# (str) Package name (يجب أن يكون فريداً)
+# (str) Package name 
 package.name = clickergame
 
-# (str) Package domain (مطلوب لـ Android/iOS)
+# (str) Package domain
 package.domain = org.test
 
 # (str) Source code where the main.py live
@@ -39,8 +39,7 @@ android.minapi = 21
 # (str) Android NDK version to use
 android.ndk = 25b
 
-# (bool) If True, then automatically accept SDK license 
-# (يحل مشكلة التراخيص القديمة)
+# (bool) If True, then automatically accept SDK license (يحل مشكلة التراخيص)
 android.accept_sdk_license = True
 
 # (str) The Android arch to build for
