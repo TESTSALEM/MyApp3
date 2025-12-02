@@ -1,4 +1,4 @@
-name: Kivy Buildozer APK Build
+name: Stable Kivy Docker Build
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # تنظيف القرص (هذا لم يعد خطأ، يجب أن يعمل بشكل صحيح الآن)
+      # 1. تنظيف القرص (ضروري)
       - name: Free Disk Space
         uses: jlumbroso/free-disk-space@v1.3.1
         with:
@@ -25,14 +25,18 @@ jobs:
           docker-images: true
           swap-storage: true
 
-      # --- الأداة المعتمدة والأكثر استقراراً (kivy/buildozer-action) ---
-      - name: Build Android APK
-        uses: kivy/buildozer-action@v1
-        with:
-          # هذا الأمر يقوم بالبناء باستخدام buildozer.spec الذي أعددناه سابقاً
-          command: buildozer android debug
+      # 2. تشغيل Buildozer داخل حاوية Docker مباشرةً
+      # نستخدم صورة docker/buildozer/android-sdk التي يتم تحديثها من Kivy
+      - name: Run Buildozer via Docker
+        run: |
+          docker pull kivy/buildozer:stable
+          docker run --rm \
+            -v ${{ github.workspace }}:/home/user/host \
+            -w /home/user/host \
+            kivy/buildozer:stable \
+            buildozer android debug
 
-      # رفع ملف APK الناتج
+      # 3. رفع ملف APK الناتج
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
