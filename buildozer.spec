@@ -39,13 +39,13 @@ android.minapi = 21
 # (str) Android NDK version to use
 android.ndk = 25b
 
-# (bool) If True, then automatically accept SDK license (يحل مشكلة التراخيص)
+# (bool) If True, then automatically accept SDK license 
 android.accept_sdk_license = True
 
 # (str) The Android arch to build for
 android.archs = arm64-v8a
 
-# الحل لخطأ التراخيص (build-tools:36.1.0)
+# 🛑 الحل لخطأ التراخيص (License not accepted) 🛑
 android.build_tools_version = 34.0.0
 
 [buildozer]
@@ -53,5 +53,5 @@ android.build_tools_version = 34.0.0
 # (int) Log level (2 = debug with command output)
 log_level = 2
 
-# 🛑 الحل لخطأ EOFError: إيقاف التحذير لكي لا يطلب المدخلات اليدوية 🛑
+# 🛑 الحل لخطأ EOFError (منع طلب المدخلات اليدوية) 🛑
 warn_on_root = 0
